@@ -14,7 +14,7 @@ describe('Central de Atendimento ao Cliente TAT', function() {
 
     })
 
-    it('preenche os campos obrigatórios e envia o formulário', () => {
+    it.only('preenche os campos obrigatórios e envia o formulário', () => {
         
         cy.get('#firstName').type('Andre Lucas')
         cy.get('#lastName').type('Marques')

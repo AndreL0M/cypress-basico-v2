@@ -2,6 +2,8 @@
 
 describe('Central de Atendimento ao Cliente TAT', function() {
     
+    const TRES_SEGUNDOS = 3000
+
     beforeEach(() => {
     
         cy.visit("./src/index.html")
@@ -16,23 +18,30 @@ describe('Central de Atendimento ao Cliente TAT', function() {
 
     it('preenche os campos obrigatórios e envia o formulário', () => {
         
+        cy.clock()
+
         cy.get('#firstName').type('Andre Lucas')
         cy.get('#lastName').type('Marques')
         cy.get('#email').type('marquesandre@exemplo.com')
         cy.get('#open-text-area').type('It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using Content here, content here, making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for lorem ipsum will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).',{delay:0})
         cy.get('button[type="submit"]').click()
         cy.get('.success').should('be.visible')
+        cy.tick(TRES_SEGUNDOS)
+        cy.get('.success').should('not.be.visible')
 
     });
 
     it('exibe mensagem de erro ao submeter o formulário com um email com formatação inválida', () => {
         
+        cy.clock()
         cy.get('#firstName').type('Andre Lucas')
         cy.get('#lastName').type('Marques')
         cy.get('#email').type('emailerrado,cum')
         cy.get('#open-text-area').type('It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using Content here, content here, making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for lorem ipsum will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).',{delay:0})
         cy.get('button[type="submit"]').click()
         cy.get('.error').should('be.visible')
+        cy.tick(TRES_SEGUNDOS)
+        cy.get('.error').should('not.be.visible')
 
     });
 
@@ -44,6 +53,7 @@ describe('Central de Atendimento ao Cliente TAT', function() {
 
     it('exibe mensagem de erro quando o telefone se torna obrigatório mas não é preenchido antes do envio do formulário', () => {
         
+        cy.clock()
         cy.get('#firstName').type('Andre Lucas')
         cy.get('#lastName').type('Marques')
         cy.get('#email').type('marquesandre@exemplo.com')
@@ -51,6 +61,8 @@ describe('Central de Atendimento ao Cliente TAT', function() {
         cy.get('#phone-checkbox').check()
         cy.get('button[type="submit"]').click()
         cy.get('.error').should('be.visible')
+        cy.tick(TRES_SEGUNDOS)
+        cy.get('.error').should('not.be.visible')
 
     });
 
@@ -65,15 +77,21 @@ describe('Central de Atendimento ao Cliente TAT', function() {
 
     it('exibe mensagem de erro ao submeter o formulário sem preencher os campos obrigatórios', () => {
         
+        cy.clock()
         cy.get('button[type="submit"]').click()
         cy.get('.error').should('be.visible')
+        cy.tick(TRES_SEGUNDOS)
+        cy.get('.error').should('not.be.visible')
 
     });
 
     it('envia o formuário com sucesso usando um comando customizado', () => {
         
+        cy.clock()
         cy.formularioPreenchidoEEnviado()
         cy.get('.success').should('be.visible')
+        cy.tick(TRES_SEGUNDOS)
+        cy.get('.success').should('not.be.visible')
 
     });
 

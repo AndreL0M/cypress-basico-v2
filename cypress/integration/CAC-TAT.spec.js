@@ -199,7 +199,7 @@ describe('Central de Atendimento ao Cliente TAT', function() {
 
     });
 
-    it.only('preenche a area de texto usando o comando invoke', () => {
+    it('preenche a area de texto usando o comando invoke', () => {
         
         const longText = Cypress._.repeat('Texto preenche a area de texto usando o comando invoke ', 10)
         

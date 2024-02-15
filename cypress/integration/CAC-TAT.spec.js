@@ -218,5 +218,11 @@ describe('Central de Atendimento ao Cliente TAT', function() {
 
     });
 
+    it.only('Encontra o gato escondido', () => {
+        
+        cy.get('#cat').invoke('show').should('be.visible')
+
+    });
+
   })
   
